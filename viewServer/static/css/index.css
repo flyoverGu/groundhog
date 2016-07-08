@@ -1,0 +1,18 @@
+.list-panel {
+}
+
+.item-url {
+    width: 400px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
+
+#header-view {
+    height: 300px;
+}
+
+#body-view {
+    height: 300px;
+}

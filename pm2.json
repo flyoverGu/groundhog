@@ -1,0 +1,9 @@
+{
+    "name": "proxy",
+    "script": "app.js",
+    "env": {
+        "DEBUG": "logServer"
+    },
+    "watch": true
+}
+
