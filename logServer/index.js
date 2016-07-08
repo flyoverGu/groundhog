@@ -6,6 +6,7 @@ let EventEmitter = require('events');
 let eventEmitter = new EventEmitter();
 let crypto = require('crypto');
 let log = require('debug')('logServer');
+let util = require('../util');
 
 let createData = (req) => {
     var id = crypto.randomBytes(16).toString('hex');
@@ -108,15 +109,7 @@ let setRes = (id, res) => {
 }
 
 let getPipe = (p, done, fail) => {
-    let _chunk = [];
-    p.on('data', chunk => {
-        _chunk.push(chunk);
-    }).on('end', () => {
-        done && done(_chunk.join(''));
-    }).on('error', () => {
-        fail && fail();
-    });
-    return p;
+    return util.getPipe(p, done, fail);
 }
 
 let getData = () => {

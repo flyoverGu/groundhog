@@ -3,8 +3,9 @@
 let http = require('http');
 let url = require('url');
 let logServer = require('../logServer');
-let ruleMap = require('../rule').get();
-let mockPath = require('../rule').getMock();
+let ruleObj = require('../rule').get();
+let mockPath = ruleObj.mock.status ? ruleObj.mock.path : ruleObj.mock.path;
+let ruleMap = ruleObj.rule;
 let fs = require('fs');
 let log = require('debug')('http');
 let Readable = require('stream').Readable;
@@ -91,7 +92,7 @@ let next = (req, res) => {
     // 代理mock数据
     let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
         req.query && (req.query['api_name'] || req.query['apiName']);
-    if (apiName) {
+    if (apiName && mockPath) {
         proxyMock(req, res, apiName);
         return;
     }

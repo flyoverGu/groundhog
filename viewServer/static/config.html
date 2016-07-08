@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>配置页面</title>
+    <link href="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+    rel="stylesheet">
+</head>
+
+<body class="container">
+    <h3>配置项</h3>
+    <form>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">项目根路径</label>
+            <input type="text" class="form-control" id="rootPath" placeholder="project root">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputPassword1">Mock文件路径</label>
+            <input type="text" class="form-control" id="mockPath" placeholder="mock path">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleTextarea">静态资源替换规则</label>
+            <textarea class="form-control" id="ruleStr" rows="8"></textarea>
+            <small class="text-muted">支持正则匹配</small>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+
+    <script>
+        $.getJSON('http://127.0.0.1:8887/getRule', null, function(data)
+        {
+            console.log(data);
+            $('#rootPath').val(data.root);
+            $('#mockPath').val(data.mock.path);
+            $('#ruleStr').val(data.ruleStr);
+        });
+
+        $('.btn').on('click', function()
+        {
+            var data = {
+                root: $('#rootPath').val(),
+                ruleStr: $('#ruleStr').val(),
+                mock:
+                {
+                    path: $('#mockPath').val(),
+                    status: true
+                }
+            }
+            $.ajax(
+            {
+                contentType: 'application/json; charset=UTF-8',
+                url: 'http://127.0.0.1:8887/setRule',
+                data: JSON.stringify(data),
+                type: 'POST',
+                success: function() {}
+            })
+            return false;
+        });
+    </script>
+</body>
+
+</html>

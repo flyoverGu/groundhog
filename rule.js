@@ -1,30 +1,38 @@
 'use strict';
 let path = require('path');
-// 代理规则
-let rule = {};
 
-// 代理本地根路径
 let conf = {
-    root: '/Users/flyover/work/wd-goods-mobile'
+    root: '',
+    mock: {
+        path: '',
+        status: true
+    },
+    ruleStr: ''
 };
 
+let _setRule = (ruleStr) => {
+    conf.ruleStr = ruleStr;
+}
+
+let _setRoot = (root) => {
+    conf.root = root;
+}
+
+let _setMock = (mock) => {
+    conf.mock.status = mock.status;
+    conf.mock.path = mock.path;
+}
+
+let set = (str) => {
+    let data = JSON.parse(str);
+    _setRule(data.ruleStr);
+    _setRoot(data.root);
+    _setMock(data.mock);
+}
+
 let get = () => {
-    return rule;
-}
-
-let getMock = () => {
-    return path.join(conf.root, 'mock_ajax');
-}
-
-let resetRule = () => {
-    for (let key in rule) {
-        delete rule[key];
-    }
-}
-
-let set = (ruleStr) => {
-    resetRule();
-    let ruleList = ruleStr.split('\n');
+    let rule = {};
+    let ruleList = conf.ruleStr.split('\n');
     for (let i = 0; i < ruleList.length; i++) {
         let line = ruleList[i];
         let m = line.trim().match(/(\S*) +(\S*)/);
@@ -34,16 +42,12 @@ let set = (ruleStr) => {
         }
         rule[m[1]] = m[2];
     }
-    console.log(rule);
+    return Object.assign({}, conf, {
+        rule
+    });
 }
-
-set(`
-    mwdsp.tao21.\\S*/forward.jsp /dist/index.html     
-    http://mwdsp.tao21.org /dist
-        `)
 
 module.exports = {
     get: get,
-    set: set,
-    getMock
+    set: set
 }

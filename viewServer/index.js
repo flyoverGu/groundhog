@@ -5,24 +5,28 @@ let logServer = require('../logServer');
 let Primus = require('primus');
 let url = require('url');
 let rule = require('../rule');
+let util = require('../util');
+let log = require('debug')('viewServer');
 
 let app = http.createServer((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     let u = url.parse(req.url);
+    // router
     if (/^\/setRule/i.test(u.path)) {
-        let chunk = [];
-        req.on('data', c => chunk.push(c))
-            .on('end', () => {
-                let ruleStr = chunk.join('');
-                try {
-                    rule.set(ruleStr);
-                    res.end('ok');
-                } catch (e) {
-                    res.end(e.message);
-                }
-            })
-            .on('error', e => {
+        util.getPipe(req, (body) => {
+            try {
+                rule.set(body);
+                res.end('ok');
+            } catch (e) {
                 res.end(e.message);
-            });
+            }
+        }, (e) => {
+            res.end(e.message);
+        });
+    } else if (/^\/getRule/i.test(u.path)) {
+        let data = rule.get();
+        res.end(JSON.stringify(data));
     } else {
         res.end('not found !');
     }
