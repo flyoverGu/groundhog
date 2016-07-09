@@ -8,6 +8,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "bin": {
+      "123": "app.js"
+  },
   "dependencies": {
     "debug": "^2.2.0",
     "primus": "^5.2.2",
