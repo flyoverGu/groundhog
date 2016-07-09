@@ -11,6 +11,18 @@
 
 <body>
     <div class="main">
+        <div class="nav">
+            <div class="nav-item">
+                <a href="./config.html" target="_blank">修改配置</a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="clean-log">清空记录</a>
+            </div>
+            <div class="nav-item">
+                <span>地址过滤条件</span>
+                <input class="filter" type="text">
+            </div>
+        </div>
         <div class="list-panel col-md-8">
             <table class="table table-striped table-sm col-md-12">
                 <thead>
@@ -18,19 +30,25 @@
                         <th>#</th>
                         <th>Result</th>
                         <th>Method</th>
-                        <th style="width: 100px">Url</th>
+                        <th>Url</th>
                         <th>Request</th>
                         <th>Response</th>
                     </tr>
                 </thead>
                 <tbody id="item">
-                    <tr>
-                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="detail-panel col-md-4">
-            <h4>detail</h4>
+            <h6>proxy info</h6>
+            <div class="proxy-view">
+            </div>
+            <h6>header info</h6>
+            <div class="header-view">
+            </div>
+            <h6>body info</h6>
+            <div class="body-view">
+            </div>
         </div>
     </div>
 
@@ -45,10 +63,10 @@
                 <a class="item-url" target="_blank" href="{{url}}" title="{{url}}">{{url}}</a>
             </td>
             <td>
-                <a class="look-req" data-id="{{id}}">查看</a>
+                <a class="look-req" href="#" data-id="{{id}}">查看</a>
             </td>
             <td>
-                <a class="look-res" data-id="{{id}}">查看</a>
+                <a class="look-res" href="#" data-id="{{id}}">查看</a>
             </td>
         </tr>
     </script>

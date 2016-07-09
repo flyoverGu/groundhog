@@ -1,4 +1,10 @@
+body {
+    font-size: 12px;
+}
+
 .list-panel {
+    height: 95vh;
+    overflow: auto;
 }
 
 .item-url {
@@ -9,10 +15,26 @@
     white-space:nowrap;
 }
 
-#header-view {
-    height: 300px;
+.header-view {
+    height: 30vh;
+    overflow: auto;
 }
 
-#body-view {
-    height: 300px;
+.body-view {
+    height: 50vh;
+    overflow: auto;
+}
+
+.proxy-view {
+    height: 10vh;
+    overflow: auto;
+}
+
+.nav {
+    height: 30px;
+}
+
+.nav-item {
+    display: inline-block;
+    margin: 3px 20px;
 }
