@@ -35,14 +35,18 @@
             console.log(data);
             $('#rootPath').val(data.root);
             $('#mockPath').val(data.mock.path);
-            $('#ruleStr').val(data.ruleStr);
+            $('#ruleStr').val(data.rule.string);
         });
 
         $('.btn').on('click', function()
         {
             var data = {
                 root: $('#rootPath').val(),
-                ruleStr: $('#ruleStr').val(),
+                rule:
+                {
+                    string: $('#ruleStr').val(),
+                    status: true
+                },
                 mock:
                 {
                     path: $('#mockPath').val(),

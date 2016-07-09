@@ -25,7 +25,7 @@ let app = http.createServer((req, res) => {
             res.end(e.message);
         });
     } else if (/^\/getRule/i.test(u.path)) {
-        let data = rule.get();
+        let data = rule.getRawConf();
         res.end(JSON.stringify(data));
     } else {
         res.end('not found !');
