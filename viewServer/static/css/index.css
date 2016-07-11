@@ -25,6 +25,10 @@ body {
     overflow: auto;
 }
 
+img {
+    width: 100%;
+}
+
 .proxy-view {
     height: 10vh;
     overflow: auto;

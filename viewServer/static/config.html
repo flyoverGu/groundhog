@@ -24,7 +24,8 @@
             <textarea class="form-control" id="ruleStr" rows="8"></textarea>
             <small class="text-muted">支持正则匹配</small>
         </fieldset>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">确定</button>
+        <span class="set-success" style="display: none;">设置成功</span>
     </form>
 
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
@@ -59,7 +60,9 @@
                 url: 'http://127.0.0.1:8887/setRule',
                 data: JSON.stringify(data),
                 type: 'POST',
-                success: function() {}
+                success: function() {
+                    $('.set-success').show();
+                }
             })
             return false;
         });

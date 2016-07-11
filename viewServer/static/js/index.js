@@ -37,6 +37,9 @@ $('#item').on('click', '.look-req', function(e) {
     renderDetail(logData[id].res);
 });
 
+
+
+
 $('.clean-log').on('click', function() {
     $('#item').html('');
     logData = {};
@@ -50,8 +53,18 @@ $('.filter').on('keyup', function() {
 var renderDetail = function(data) {
     var proxyStr = JSON.stringify(data.proxy);
     var headerStr = JSON.stringify(data.headers);
-    var bodyStr = JSON.stringify(data.body);
-    $('.header-view').text(headerStr);
-    $('.body-view').text(bodyStr);
     $('.proxy-view').text(proxyStr);
+    $('.header-view').text(headerStr);
+    if (data.headers && data.headers['content-type'] && ~data.headers['content-type'].indexOf('image')) {
+        renderImg(data);
+    } else {
+        var bodyStr = JSON.stringify(data.body);
+        $('.body-view').text(bodyStr);
+    }
+}
+
+var renderImg = function(data) {
+    let type = data.headers['content-type'];
+    let url = 'data:' + type + ';base64,' + data.body;
+    $('.body-view').html('<img src="' + url + '">');
 }

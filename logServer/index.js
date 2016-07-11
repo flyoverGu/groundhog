@@ -100,16 +100,23 @@ let setRes = (id, res) => {
         out = zlib.createInflate();
         res.pipe(out);
     } else out = res;
-    getPipe(out, (body) => {
-        data.res.body = body;
-    }).on('end', () => {
-        eventEmitter.emit('hasProxyData', data);
-        logData[id] = null;
-    });
+    if (res.headers && res.headers['content-type'] && ~res.headers['content-type'].indexOf('image')) {
+        getPipe(out, (body) => {
+            data.res.body = body.toString('base64');
+            eventEmitter.emit('hasProxyData', data);
+            logData[id] = null;
+        }, () => {}, 'buffer');
+    } else {
+        getPipe(out, (body) => {
+            data.res.body = body;
+            eventEmitter.emit('hasProxyData', data);
+            logData[id] = null;
+        });
+    }
 }
 
-let getPipe = (p, done, fail) => {
-    return util.getPipe(p, done, fail);
+let getPipe = (p, done, fail, type) => {
+    return util.getPipe(p, done, fail, type);
 }
 
 let getData = () => {

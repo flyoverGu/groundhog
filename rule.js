@@ -1,8 +1,9 @@
 'use strict';
 let path = require('path');
 let fs = require('fs');
+let os = require('os');
 
-let tempPath = './temp/conf'
+let tempPath = path.join(os.tmpdir(), 'groundhog-temp');
 
 let conf = {
     root: '',
