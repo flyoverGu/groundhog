@@ -10,5 +10,10 @@ npm i && npm link
 ```
 
 ### Quickstart
-open `127.0.0.1:8887/index.html`。 
+
+`groundhog`    
+
+proxy client to 8888 port     
+
+open `127.0.0.1:8887/index.html`   
 
