@@ -164,9 +164,12 @@ let proxyAll = (cReq, cRes) => {
 }
 
 let startPipe = (req) => {
-    let t;
-    while (t = req._rawBody.pop()) {
-        req._stream.push(t);
+    let contentType = req.headers['content-type'];
+    if (contentType && ~contentType.indexOf('multipart/form-data;')) {
+        // buffer
+        req._stream.push(Buffer.concat(req._rawBody));
+    } else {
+        req._stream.push(req._rawBody.join(''));
     }
     req._stream.push(null);
 }
