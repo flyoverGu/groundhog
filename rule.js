@@ -5,17 +5,21 @@ let os = require('os');
 
 let tempPath = path.join(os.tmpdir(), 'groundhog-temp');
 
-let conf = {
-    root: '',
-    mock: {
-        path: '',
-        status: true
-    },
-    rule: {
-        string: '',
-        status: true
-    }
-};
+let conf = {};
+
+let _createRule = (data) => {
+    return Object.assign({
+        name: '',
+        status: true,
+        root: '',
+        mock: {
+            path: '',
+        },
+        rule: {
+            string: '',
+        }
+    }, data);
+}
 
 let _readTemp = () => {
     try {
@@ -59,7 +63,9 @@ let _parseRuleStr = (ruleStr) => {
     return rule;
 }
 
-let set = (str) => {
+let set = (str) => {}
+
+let add = (str) => {
     let data = JSON.parse(str);
     _setRule(data.rule);
     _setRoot(data.root);
@@ -87,5 +93,6 @@ _readTemp();
 module.exports = {
     get: get,
     set: set,
+    add: add,
     getRawConf
 }

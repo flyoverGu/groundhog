@@ -4,14 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <title>配置页面</title>
-    <link rel="shortcut icon" href="http://ww2.sinaimg.cn/large/72f96cbagw1f5pq6zcz6pj205k050dfu.jpg" />
+    <link rel="shortcut icon" href="http://ww2.sinaimg.cn/large/72f96cbagw1f5pq6zcz6pj205k050dfu.jpg"
+    />
     <link href="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
     rel="stylesheet">
+    <link rel="stylesheet" href="./css/config.css">
 </head>
 
 <body class="container">
     <h3>配置项</h3>
-    <form>
+    <ul class="rule-list col-md-2">
+        <li class="rule-item">旺店商品</li>
+        <div class="add-one">
+            <a href="">
+            增加配置
+            </a>
+        </div>
+    </ul>
+    <form class="col-md-10">
         <fieldset class="form-group">
             <label for="exampleInputEmail1">项目根路径</label>
             <input type="text" class="form-control" id="rootPath" placeholder="project root">
@@ -29,45 +39,12 @@
         <span class="set-success" style="display: none;">设置成功</span>
     </form>
 
-    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
 
-    <script>
-        $.getJSON('http://127.0.0.1:8887/getRule', null, function(data)
-        {
-            console.log(data);
-            $('#rootPath').val(data.root);
-            $('#mockPath').val(data.mock.path);
-            $('#ruleStr').val(data.rule.string);
-        });
-
-        $('.btn').on('click', function()
-        {
-            var data = {
-                root: $('#rootPath').val(),
-                rule:
-                {
-                    string: $('#ruleStr').val(),
-                    status: true
-                },
-                mock:
-                {
-                    path: $('#mockPath').val(),
-                    status: true
-                }
-            }
-            $.ajax(
-            {
-                contentType: 'application/json; charset=UTF-8',
-                url: 'http://127.0.0.1:8887/setRule',
-                data: JSON.stringify(data),
-                type: 'POST',
-                success: function() {
-                    $('.set-success').show();
-                }
-            })
-            return false;
-        });
+    <script id="rule-item" type="text/html">
+        <li class="rule-item" data-id={{id}}>{{name}}</li>
     </script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <script src="./js/config.js"></script>
 </body>
 
 </html>
