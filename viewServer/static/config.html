@@ -14,34 +14,44 @@
 <body class="container">
     <h3>配置项</h3>
     <ul class="rule-list col-md-2">
-        <li class="rule-item">旺店商品</li>
-        <div class="add-one">
-            <a href="">
+        <li>
+            <a href="/config.html?id=">
             增加配置
             </a>
-        </div>
+        </li>
     </ul>
     <form class="col-md-10">
-        <fieldset class="form-group">
-            <label for="exampleInputEmail1">项目根路径</label>
-            <input type="text" class="form-control" id="rootPath" placeholder="project root">
-        </fieldset>
-        <fieldset class="form-group">
-            <label for="exampleInputPassword1">Mock文件路径</label>
-            <input type="text" class="form-control" id="mockPath" placeholder="mock path">
-        </fieldset>
-        <fieldset class="form-group">
-            <label for="exampleTextarea">静态资源替换规则</label>
-            <textarea class="form-control" id="ruleStr" rows="8"></textarea>
-            <small class="text-muted">支持正则匹配</small>
-        </fieldset>
-        <button type="submit" class="btn btn-primary">确定</button>
-        <span class="set-success" style="display: none;">设置成功</span>
     </form>
 
 
     <script id="rule-item" type="text/html">
-        <li class="rule-item" data-id={{id}}>{{name}}</li>
+        <li class="rule-item {{className}}">
+            <a href="/config.html?id={{id}}">* {{name}}</a>
+        </li>
+    </script>
+
+    <script id="rule-detail" type="text/html">
+        <fieldset class="form-group">
+            <label>配置名称</label>
+            <input type="text" class="form-control" id="name" placeholder="name" value="{{name}}">
+        </fieldset>
+        <fieldset class="form-group">
+            <label>项目根路径</label>
+            <input type="text" class="form-control" id="rootPath" placeholder="project root"
+            value="{{root}}">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputPassword1">Mock文件路径</label>
+            <input type="text" class="form-control" id="mockPath" placeholder="mock path" value="{{mock}}">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleTextarea">静态资源替换规则</label>
+            <textarea class="form-control" id="ruleStr" rows="8">{{ruleStr}}</textarea>
+            <small class="text-muted">支持正则匹配</small>
+        </fieldset>
+        <button type="submit" class="set-rule btn btn-primary">{{btnText}}</button>
+        <button type="submit" class="del-rule btn btn-danger">删除</button>
+        <span class="set-success" style="display: none;">设置成功</span>
     </script>
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
     <script src="./js/config.js"></script>

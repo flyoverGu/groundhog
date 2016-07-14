@@ -4,7 +4,7 @@ let http = require('http');
 let logServer = require('../logServer');
 let Primus = require('primus');
 let url = require('url');
-let rule = require('../rule');
+let ruleDao = require('../dao/rule');
 let util = require('../util');
 let log = require('debug')('viewServer');
 
@@ -20,7 +20,7 @@ let app = http.createServer((req, res) => {
     if (/^\/setRule/i.test(u.path)) {
         util.getPipe(req, (body) => {
             try {
-                rule.set(body);
+                ruleDao.create(JSON.parse(body));
                 res.end('ok');
             } catch (e) {
                 res.setHeader('statusCode', 500);
@@ -30,8 +30,12 @@ let app = http.createServer((req, res) => {
             res.setHeader('statusCode', 500);
             res.end(e.message);
         });
+    } else if (/^\/delRule/i.test(u.path)) {
+        let id = u.query.match(/id=(\S*)/)[1];
+        ruleDao.del(id);
+        res.end('ok');
     } else if (/^\/getRule/i.test(u.path)) {
-        let data = rule.getRawConf();
+        let data = ruleDao.getRuleData();
         res.end(JSON.stringify(data));
     } else {
         staticServer(req, res);

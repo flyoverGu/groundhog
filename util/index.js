@@ -1,4 +1,5 @@
 'use strict';
+let crypto = require('crypto');
 
 let getPipe = (p, done, fail, type) => {
     let _chunk = [];
@@ -15,6 +16,12 @@ let getPipe = (p, done, fail, type) => {
     return p;
 }
 
+let generateId = () => {
+    var id = crypto.randomBytes(16).toString('hex');
+    return id;
+}
+
 module.exports = {
-    getPipe
+    getPipe,
+    generateId
 }

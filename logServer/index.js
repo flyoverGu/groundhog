@@ -4,12 +4,11 @@ let zlib = require('zlib');
 let logData = {};
 let EventEmitter = require('events');
 let eventEmitter = new EventEmitter();
-let crypto = require('crypto');
 let log = require('debug')('logServer');
 let util = require('../util');
 
 let createData = (req) => {
-    var id = crypto.randomBytes(16).toString('hex');
+    let id = util.generateId();
     logData[id] = {
         id: id,
         url: '',

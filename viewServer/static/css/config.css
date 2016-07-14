@@ -1,6 +1,6 @@
 li {
     list-style: none;
 }
-
-.rule-item {
+.rule-item.active {
+    background-color: #4CAF50;
 }

@@ -1,21 +1,26 @@
 $.getJSON('http://127.0.0.1:8887/getRule', null, function(data) {
     console.log(data);
-    $('#rootPath').val(data.root);
-    $('#mockPath').val(data.mock.path);
-    $('#ruleStr').val(data.rule.string);
+    renderHtml(data);
 });
 
-$('.btn').on('click', function() {
+var ID = '';
+try {
+    ID = location.search.match(/\?id=(\S*)/)[1];
+} catch (e) {}
+
+$('form').on('click', '.set-rule', function() {
     var data = {
+        name: $('#name').val(),
         root: $('#rootPath').val(),
         rule: {
             string: $('#ruleStr').val(),
-            status: true
         },
         mock: {
             path: $('#mockPath').val(),
-            status: true
         }
+    }
+    if (ID) {
+        data.id = ID;
     }
     $.ajax({
         contentType: 'application/json; charset=UTF-8',
@@ -24,7 +29,53 @@ $('.btn').on('click', function() {
         type: 'POST',
         success: function() {
             $('.set-success').show();
+            location.href = '/config.html';
         }
     })
     return false;
+}).on('click', '.del-rule', function() {
+    $.getJSON('http://127.0.0.1:8887/delRule', {
+        id: ID
+    }, function() {
+        location.href = '/config.html';
+    });
 });
+
+var renderHtml = function(data) {
+    var list = [];
+    for (var id in data) {
+        list.push(data[id]);
+    }
+
+    // render list 
+    if (list.length) {
+        var html = list.map(function(item) {
+            if (item.id == ID) item.className = "active";
+            return tpl('rule-item', item);
+        }).join('');
+        $('.rule-list').prepend(html);
+    }
+
+    // render detail
+    var rd = data[ID] || {
+        mock: {},
+        rule: {}
+    };
+    var html = tpl('rule-detail', {
+        root: rd.root || '',
+        name: rd.name || '',
+        mock: rd.mock.path || '',
+        ruleStr: rd.rule.string || '',
+        btnText: rd.id ? '更新' : '新建'
+    });
+    $('form').html(html);
+
+}
+
+var tpl = function(id, data) {
+    var template = $('#' + id + '').html();
+    var html = template.replace(/{{([^}]+)}}/g, function(a, b) {
+        return data[b.trim()];
+    });
+    return html;
+}
