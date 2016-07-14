@@ -91,8 +91,12 @@ let next = (req, res) => {
     let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
         req.query && (req.query['api_name'] || req.query['apiName']);
     let mockPath = ruleObj.get().mock;
-    if (apiName && mockPath) {
-        proxyMock(req, res, apiName);
+    if (apiName) {
+        if (mockPath) {
+            proxyMock(req, res, apiName);
+        } else {
+            proxyAll(req, res);
+        }
         return;
     }
 
