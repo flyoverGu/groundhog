@@ -11,6 +11,7 @@ try {
 $('form').on('click', '.set-rule', function() {
     var data = {
         name: $('#name').val(),
+        status: $('.status').prop('checked'),
         root: $('#rootPath').val(),
         rule: {
             string: $('#ruleStr').val(),
@@ -29,7 +30,7 @@ $('form').on('click', '.set-rule', function() {
         type: 'POST',
         success: function() {
             $('.set-success').show();
-            location.href = '/config.html';
+            location.reload();
         }
     })
     return false;
@@ -66,7 +67,8 @@ var renderHtml = function(data) {
         name: rd.name || '',
         mock: rd.mock.path || '',
         ruleStr: rd.rule.string || '',
-        btnText: rd.id ? '更新' : '新建'
+        btnText: rd.id ? '更新' : '新建',
+        checked: rd.id ? (rd.status ? 'checked' : '') : 'checked'
     });
     $('form').html(html);
 

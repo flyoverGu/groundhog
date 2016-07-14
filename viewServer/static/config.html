@@ -49,6 +49,11 @@
             <textarea class="form-control" id="ruleStr" rows="8">{{ruleStr}}</textarea>
             <small class="text-muted">支持正则匹配</small>
         </fieldset>
+        <div>
+            <label>
+                <input class="status" type="checkbox" {{checked}}>启动
+            </label>
+        </div>
         <button type="submit" class="set-rule btn btn-primary">{{btnText}}</button>
         <button type="submit" class="del-rule btn btn-danger">删除</button>
         <span class="set-success" style="display: none;">设置成功</span>
