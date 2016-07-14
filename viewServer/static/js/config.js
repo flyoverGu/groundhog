@@ -52,6 +52,8 @@ var renderHtml = function(data) {
     if (list.length) {
         var html = list.map(function(item) {
             if (item.id == ID) item.className = "active";
+            if (item.status) item.statusText = "已启动";
+            else item.statusText = "未启动";
             return tpl('rule-item', item);
         }).join('');
         $('.rule-list').prepend(html);
