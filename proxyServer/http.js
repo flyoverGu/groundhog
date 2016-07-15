@@ -3,7 +3,7 @@
 let http = require('http');
 let url = require('url');
 let logServer = require('../logServer');
-let ruleObj = require('../rule');
+let ruleDao = require('../dao/rule');
 let fs = require('fs');
 let log = require('debug')('http');
 let Readable = require('stream').Readable;
@@ -90,10 +90,10 @@ let next = (req, res) => {
     // 代理mock数据
     let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
         req.query && (req.query['api_name'] || req.query['apiName']);
-    let mockPath = ruleObj.get().mock;
     if (apiName) {
-        if (mockPath) {
-            proxyMock(req, res, apiName);
+        let mockPath = ruleDao.getMockPath();
+        if (mockPath.length) {
+            proxyMock(req, res, apiName, mockPath);
         } else {
             proxyAll(req, res);
         }
@@ -101,7 +101,7 @@ let next = (req, res) => {
     }
 
     // 代理到本地静态文件
-    let ruleMap = ruleObj.get().rule;
+    let ruleMap = ruleDao.getRuleMap();
     for (let key in ruleMap) {
         let rule = new RegExp(key);
         if (rule.test(req.url)) {
@@ -114,9 +114,8 @@ let next = (req, res) => {
     proxyAll(req, res);
 }
 
-let proxyMock = (req, res, apiName) => {
+let proxyMock = (req, res, apiName, mockPath) => {
     let param = req.query || req.body;
-    let mockPath = ruleObj.get().mock;
     let modulePath = path.join(mockPath, apiName);
     require.cache[require.resolve(modulePath)] && delete require.cache[require.resolve(modulePath)];
     let method = require(modulePath);

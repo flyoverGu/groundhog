@@ -12,13 +12,8 @@ $('form').on('click', '.set-rule', function() {
     var data = {
         name: $('#name').val(),
         status: $('.status').prop('checked'),
-        root: $('#rootPath').val(),
-        rule: {
-            string: $('#ruleStr').val(),
-        },
-        mock: {
-            path: $('#mockPath').val(),
-        }
+        ruleStr: $('#ruleStr').val(),
+        mockPath: $('#mockPath').val()
     }
     if (ID) {
         data.id = ID;
@@ -60,15 +55,11 @@ var renderHtml = function(data) {
     }
 
     // render detail
-    var rd = data[ID] || {
-        mock: {},
-        rule: {}
-    };
+    var rd = data[ID] || {};
     var html = tpl('rule-detail', {
-        root: rd.root || '',
         name: rd.name || '',
-        mock: rd.mock.path || '',
-        ruleStr: rd.rule.string || '',
+        mockPath: rd.mockPath || '',
+        ruleStr: rd.ruleStr || '',
         btnText: rd.id ? '更新' : '新建',
         checked: rd.id ? (rd.status ? 'checked' : '') : 'checked'
     });
