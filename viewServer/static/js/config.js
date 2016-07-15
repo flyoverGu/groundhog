@@ -1,4 +1,4 @@
-$.getJSON('http://127.0.0.1:8887/getRule', null, function(data) {
+$.getJSON('/getRule', null, function(data) {
     console.log(data);
     renderHtml(data);
 });
@@ -30,7 +30,7 @@ $('form').on('click', '.set-rule', function() {
     })
     return false;
 }).on('click', '.del-rule', function() {
-    $.getJSON('http://127.0.0.1:8887/delRule', {
+    $.getJSON('/delRule', {
         id: ID
     }, function() {
         location.href = '/config.html';

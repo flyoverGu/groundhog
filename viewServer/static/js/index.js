@@ -28,17 +28,13 @@ var renderItem = function(data) {
     $('#item').append(html);
 }
 
-
 $('#item').on('click', '.look-req', function(e) {
     var id = $(e.target).data('id');
     renderDetail(logData[id].req);
-}).on('click', '.look-res', (e) => {
+}).on('click', '.look-res', function(e) {
     var id = $(e.target).data('id');
     renderDetail(logData[id].res);
 });
-
-
-
 
 $('.clean-log').on('click', function() {
     $('#item').html('');
@@ -64,7 +60,7 @@ var renderDetail = function(data) {
 }
 
 var renderImg = function(data) {
-    let type = data.headers['content-type'];
-    let url = 'data:' + type + ';base64,' + data.body;
+    var type = data.headers['content-type'];
+    var url = 'data:' + type + ';base64,' + data.body;
     $('.body-view').html('<img src="' + url + '">');
 }
