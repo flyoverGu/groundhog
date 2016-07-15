@@ -39,6 +39,7 @@ let create = (data) => {
 
 let del = (id) => {
     delete ruleData[id];
+    _writeTemp();
 };
 
 

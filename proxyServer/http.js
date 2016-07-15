@@ -92,7 +92,7 @@ let next = (req, res) => {
         req.query && (req.query['api_name'] || req.query['apiName']);
     if (apiName) {
         let mockPath = ruleDao.getMockPath();
-        if (mockPath.length) {
+        if (mockPath && mockPath.length) {
             proxyMock(req, res, apiName, mockPath);
         } else {
             proxyAll(req, res);
