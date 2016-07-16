@@ -6,24 +6,22 @@ body {
     overflow: auto;
 }
 .item-url {
-    width: 400px;
     display: inline-block;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.header-view {
-    height: 30vh;
+pre.header {
+    height: 25vh;
     overflow: auto;
 }
-.body-view {
+pre.body {
     height: 45vh;
     overflow: auto;
 }
 img {
     width: 100%;
 }
-.proxy-view {
+pre.proxy {
     height: 10vh;
     overflow: auto;
 }
@@ -33,6 +31,9 @@ img {
 .nav-item {
     display: inline-block;
     margin: 3px 20px;
+}
+#item tr {
+    cursor: pointer;
 }
 pre {
     outline: 1px solid #ccc;

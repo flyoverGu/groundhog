@@ -35,12 +35,9 @@ var renderItem = function(data) {
     $('#item').append(html);
 }
 
-$('#item').on('click', '.look-req', function(e) {
-    var id = $(e.target).data('id');
-    renderDetail(logData[id].req);
-}).on('click', '.look-res', function(e) {
-    var id = $(e.target).data('id');
-    renderDetail(logData[id].res);
+$('#item').on('click', 'tr', function(e) {
+    var id = $(e.currentTarget).data('id');
+    renderDetail(logData[id]);
 });
 
 $('.clean-log').on('click', function() {
@@ -54,23 +51,40 @@ $('.filter').on('keyup', function() {
 }).val(filter);
 
 var renderDetail = function(data) {
-    $('.proxy-view').html(syntaxHighlight(data.proxy));
-    $('.header-view').html(syntaxHighlight(data.headers));
-    if (data.headers && data.headers['content-type'] && ~data.headers['content-type'].indexOf('image')) {
-        renderImg(data);
-    } else if (data.headers && data.headers['content-type'] && ~data.headers['content-type'].indexOf('html')) {
+    renderJSON($('#request .header'), data.req.headers);
+    renderBody($('#request .body'), data.req);
+
+    renderJSON($('#response .header'), data.res.headers);
+    renderBody($('#response .body'), data.res);
+
+    renderJSON($('#proxy-rule pre'), data.res.proxy);
+}
+
+var isContentType = function(headers, ct) {
+    if (headers && headers['content-type'] && ~headers['content-type'].indexOf(ct)) {
+        return true;
+    } else return false;
+}
+
+var renderBody = function($el, data) {
+    if (isContentType(data.headers, 'image')) {
+        renderImg($el, data);
+    } else if (isContentType(data.headers, 'html')) {
         var bodyStr = JSON.stringify(data.body);
-        $('.body-view').text(bodyStr);
+        $el.text(bodyStr);
     } else {
-        var bodyStr = JSON.stringify(data.body);
-        $('.body-view').html(syntaxHighlight(bodyStr));
+        renderJSON($el, data.body);
     }
 }
 
-var renderImg = function(data) {
+var renderJSON = function($el, json) {
+    $el.html(syntaxHighlight(json));
+}
+
+var renderImg = function($el, data) {
     var type = data.headers['content-type'];
     var url = 'data:' + type + ';base64,' + data.body;
-    $('.body-view').html('<img src="' + url + '">');
+    $el.html('<img src="' + url + '">');
 }
 
 function syntaxHighlight(json) {

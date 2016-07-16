@@ -33,8 +33,6 @@
                         <th>Result</th>
                         <th>Method</th>
                         <th>Url</th>
-                        <th>Request</th>
-                        <th>Response</th>
                     </tr>
                 </thead>
                 <tbody id="item">
@@ -42,15 +40,37 @@
             </table>
         </div>
         <div class="detail-panel col-md-4">
-            <h6>proxy info</h6>
-            <pre class="proxy-view">
-            </pre>
-            <h6>header info</h6>
-            <pre class="header-view">
-            </pre>
-            <h6>body info</h6>
-            <pre class="body-view">
-            </pre>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#request" role="tab">Request</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#response" role="tab">Response</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#proxy-rule" role="tab">rule</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="request" role="tabpanel">
+                    <pre class="header">
+                    </pre>
+                    <pre class="body">
+                    </pre>
+                </div>
+                <div class="tab-pane" id="response" role="tabpanel">
+                    <pre class="header">
+                    </pre>
+                    <pre class="body">
+                    </pre>
+                </div>
+                <div class="tab-pane" id="proxy-rule" role="tabpanel">
+                    <pre>
+                    </pre>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -64,20 +84,15 @@
         }
     </script>
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
     <script src="./js/ws.js"></script>
     <script id="t-item" type="text/html">
-        <tr class="{{className}}">
+        <tr data-id="{{id}}" class="{{className}}">
             <th scope="row">{{order}}</th>
             <td>{{statusCode}}</td>
             <td>{{method}}</td>
             <td>
-                <a class="item-url" target="_blank" href="{{url}}" title="{{url}}">{{url}}</a>
-            </td>
-            <td>
-                <a class="look-req" href="#" data-id="{{id}}">查看</a>
-            </td>
-            <td>
-                <a class="look-res" href="#" data-id="{{id}}">查看</a>
+                <span class="item-url">{{url}}</span>
             </td>
         </tr>
     </script>
