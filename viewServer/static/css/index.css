@@ -1,44 +1,56 @@
 body {
     font-size: 12px;
 }
-
 .list-panel {
     height: 95vh;
     overflow: auto;
 }
-
 .item-url {
     width: 400px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space:nowrap;
+    white-space: nowrap;
 }
-
 .header-view {
     height: 30vh;
     overflow: auto;
 }
-
 .body-view {
     height: 45vh;
     overflow: auto;
 }
-
 img {
     width: 100%;
 }
-
 .proxy-view {
     height: 10vh;
     overflow: auto;
 }
-
 .nav {
     height: 30px;
 }
-
 .nav-item {
     display: inline-block;
     margin: 3px 20px;
+}
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+.string {
+    color: green;
+}
+.number {
+    color: darkorange;
+}
+.boolean {
+    color: blue;
+}
+.null {
+    color: magenta;
+}
+.key {
+    color: red;
 }

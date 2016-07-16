@@ -1,5 +1,6 @@
 'use strict';
 let crypto = require('crypto');
+let fs = require('fs');
 
 let getPipe = (p, done, fail, type) => {
     let _chunk = [];
@@ -27,6 +28,7 @@ let isFile = (filePath) => {
         if (state.isFile()) return true;
         else return false;
     } catch (e) {
+        console.log(e);
         return false;
     }
 }
