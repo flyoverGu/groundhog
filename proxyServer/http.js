@@ -8,6 +8,7 @@ let fs = require('fs');
 let log = require('debug')('http');
 let Readable = require('stream').Readable;
 let path = require('path');
+let util = require('../util');
 
 function request(req, res) {
     log(`http request url : ${req.url}`);
@@ -131,12 +132,14 @@ let proxyMock = (req, res, apiName, mockPath) => {
 }
 
 let proxyStatic = (req, res, filePath, rule) => {
-    if (!isFile(filePath)) {
+    if (!util.isFile(filePath)) {
         let u = url.parse(req.url);
         filePath = path.join(filePath, u.pathname);
     }
-    if (!isFile(filePath)) {
+    if (!util.isFile(filePath)) {
         logServer.setProxyStatic(req.logId, false, filePath, rule);
+        res.writeHead(404);
+        res.end(`not found ${filePath}`);
     } else {
         let readable = fs.createReadStream(filePath);
         readable.pipe(res);
@@ -175,12 +178,6 @@ let startPipe = (req) => {
         req._stream.push(req._rawBody.join(''));
     }
     req._stream.push(null);
-}
-
-let isFile = (filePath) => {
-    let state = fs.statSync(filePath);
-    if (state.isFile()) return true;
-    else return false;
 }
 
 

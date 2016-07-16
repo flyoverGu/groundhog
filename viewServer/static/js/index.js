@@ -16,11 +16,18 @@ var renderItem = function(data) {
     var template = $('#t-item').html();
     data.order = count++;
     if (data.res.statusCode == 1200) {
-        data.statusCode = '代理成功'
+        data.statusCode = '代理成功';
+        data.className = 'table-success';
     } else if (data.res.statusCode == 1500) {
         data.statusCode = '代理失败'
+        data.className = 'table-danger';
     } else {
         data.statusCode = data.res.statusCode;
+        if (/^[45][0-9]{2}$/.test(data.res.statusCode)) {
+            data.className = 'table-danger';
+        } else if (/^[2][0-9]{2}$/.test(data.res.statusCode)) {
+            data.className = 'table-info';
+        }
     }
     var html = template.replace(/{{([^}]+)}}/g, function(a, b) {
         return data[b.trim()];

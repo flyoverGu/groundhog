@@ -21,7 +21,18 @@ let generateId = () => {
     return id;
 }
 
+let isFile = (filePath) => {
+    try {
+        let state = fs.statSync(filePath);
+        if (state.isFile()) return true;
+        else return false;
+    } catch (e) {
+        return false;
+    }
+}
+
 module.exports = {
     getPipe,
-    generateId
+    generateId,
+    isFile
 }
