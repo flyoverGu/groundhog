@@ -7,7 +7,8 @@
     <link href="http://cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
     rel="stylesheet">
     <link rel="stylesheet" href="./css/index.css">
-    <link rel="shortcut icon" href="http://ww2.sinaimg.cn/large/72f96cbagw1f5pq6zcz6pj205k050dfu.jpg" />
+    <link rel="shortcut icon" href="http://ww2.sinaimg.cn/large/72f96cbagw1f5pq6zcz6pj205k050dfu.jpg"
+    />
 </head>
 
 <body>
@@ -53,6 +54,15 @@
         </div>
     </div>
 
+
+    <script>
+        // fix jquery in electron
+        if (typeof module === 'object')
+        {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
     <script src="./js/ws.js"></script>
     <script id="t-item" type="text/html">

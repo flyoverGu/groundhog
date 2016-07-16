@@ -53,6 +53,14 @@
         <button type="submit" class="del-rule btn btn-danger">删除</button>
         <span class="set-success" style="display: none;">设置成功</span>
     </script>
+    <script>
+        // fix jquery in electron
+        if (typeof module === 'object')
+        {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
     <script src="./js/config.js"></script>
 </body>
