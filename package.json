@@ -1,13 +1,14 @@
 {
-  "name": "proxy",
+  "name": "Groundhog",
   "version": "1.0.0",
   "main": "electron.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "package": "electron-packager . --all"
   },
   "author": "",
   "license": "ISC",
   "description": "",
+  "productName": "Groundhog",
   "bin": {
       "groundhog": "app.js"
   },

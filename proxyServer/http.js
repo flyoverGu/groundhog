@@ -118,15 +118,16 @@ let next = (req, res) => {
 let proxyMock = (req, res, apiName, mockPath) => {
     let param = req.query || req.body;
     let modulePath = path.join(mockPath, apiName);
-    require.cache[require.resolve(modulePath)] && delete require.cache[require.resolve(modulePath)];
-    let method = require(modulePath);
-    let data = method(param);
     try {
+        require.cache[require.resolve(modulePath)] && delete require.cache[require.resolve(modulePath)];
+        let method = require(modulePath);
+        let data = method(param);
         data = JSON.stringify(data);
         res.end(data);
         logServer.setProxyMock(req.logId, data, apiName);
     } catch (e) {
-        res.end();
+        res.writeHead(502);
+        res.end(`some thing wrong with ${modulePath}`);
         logServer.setProxyMock(req.logId, false, apiName);
     }
 }

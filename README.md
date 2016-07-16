@@ -1,5 +1,5 @@
 # groundhog
-groundhog for proxy
+groundhog for proxy request
 
 
 ### Installation
@@ -16,4 +16,5 @@ npm i && npm link
 proxy client to 8888 port     
 
 open `127.0.0.1:8887/index.html`   
+
 

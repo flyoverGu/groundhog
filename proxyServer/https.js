@@ -3,12 +3,13 @@
 let url = require('url');
 let net = require('net');
 let log = require('debug')('https');
+let logServer = require('../logServer');
 
 function connect(cReq, cSock) {
     log('connect');
-    var u = url.parse('http://' + cReq.url);
-
-    var pSock = net.connect(u.port, u.hostname, function() {
+    let u = url.parse('http://' + cReq.url);
+    logServer.setTunnel(cReq);
+    let pSock = net.connect(u.port, u.hostname, function() {
         cSock.write('HTTP/1.1 200 Connection Established\r\n\r\n');
         pSock.pipe(cSock);
     }).on('error', function(e) {

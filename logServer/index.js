@@ -122,6 +122,14 @@ let getData = () => {
     return logData;
 }
 
+let setTunnel = (req) => {
+    var id = createData(req);
+    var data = logData[id];
+    data.url = req.url;
+    data.method = req.method;
+    eventEmitter.emit('hasProxyData', data);
+}
+
 module.exports = {
     setReq,
     setRes,
@@ -129,5 +137,6 @@ module.exports = {
     eventEmitter,
     getData,
     setProxyStatic,
-    setProxyMock
+    setProxyMock,
+    setTunnel
 }
