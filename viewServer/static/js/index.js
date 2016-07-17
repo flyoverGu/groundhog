@@ -69,7 +69,7 @@ var isContentType = function(headers, ct) {
 var renderBody = function($el, data) {
     if (isContentType(data.headers, 'image')) {
         renderImg($el, data);
-    } else if (isContentType(data.headers, 'html')) {
+    } else if (isContentType(data.headers, 'html') || !data.headers) {
         var bodyStr = JSON.stringify(data.body);
         $el.text(bodyStr);
     } else {
