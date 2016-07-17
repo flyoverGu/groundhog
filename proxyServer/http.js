@@ -107,7 +107,7 @@ let next = (req, res) => {
     for (let key in ruleMap) {
         let rule = new RegExp(key);
         if (rule.test(req.url)) {
-            proxyStatic(req, res, ruleMap[key], key);
+            proxyStatic(req, res, ruleMap[key].path, key, ruleMap[key].isOnline);
             return;
         }
     }

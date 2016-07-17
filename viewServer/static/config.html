@@ -46,6 +46,12 @@
         </fieldset>
         <div>
             <label>
+                <input class="isOnline" type="checkbox" {{isOnlineChecked}}>启动静态资源线上验证
+                <small class="text-muted">静态资源请求将真实访问到线上，返回线上请求的头信息和本地资源内容, 针对一些特殊场景需要开启</small>
+            </label>
+        </div>
+        <div>
+            <label>
                 <input class="status" type="checkbox" {{checked}}>启动
             </label>
         </div>

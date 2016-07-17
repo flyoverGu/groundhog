@@ -30,6 +30,7 @@ let create = (data) => {
         id: util.generateId(),
         name: '',
         status: true,
+        isOnline: false,
         mockPath: '',
         ruleStr: ''
     }, data);
@@ -53,7 +54,7 @@ let _getList = () => {
     for (let id in ruleData) {
         let item = ruleData[id];
         if (item.status) {
-            _parseRuleStr(ruleMap, item.ruleStr);
+            _parseRuleStr(ruleMap, item.ruleStr, item.isOnline);
             mockList.push(item.mockPath);
         }
     }
@@ -71,13 +72,16 @@ let getMockPath = () => {
     return _getList().mockList[0];
 }
 
-let _parseRuleStr = (rule, ruleStr) => {
+let _parseRuleStr = (rule, ruleStr, isOnline) => {
     let ruleList = ruleStr.split('\n');
     for (let i = 0; i < ruleList.length; i++) {
         let line = ruleList[i];
         let m = line.trim().match(/(\S*) +(\S*)/);
         if (!m) continue;
-        rule[m[1]] = m[2];
+        rule[m[1]] = {
+            path: m[2],
+            isOnline: isOnline
+        };
     }
     return rule;
 }
