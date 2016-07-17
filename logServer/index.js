@@ -44,13 +44,14 @@ let setReq = (id, req) => {
     })
 }
 
-let setProxyStatic = (id, stream, filePath, rule) => {
+let setProxyStatic = (id, stream, filePath, rule, headers) => {
     let data = logData[id];
     data.res.proxy = {
         type: 'static',
         rule: rule,
         localPath: filePath
     }
+    headers && (data.res.headers = headers);
     if (stream === false) {
         data.res.statusCode = 1500;
         eventEmitter.emit('hasProxyData', data);

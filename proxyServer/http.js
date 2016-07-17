@@ -9,6 +9,7 @@ let log = require('debug')('http');
 let Readable = require('stream').Readable;
 let path = require('path');
 let util = require('../util');
+let zlib = require('zlib');
 
 function request(req, res) {
     log(`http request url : ${req.url}`);
@@ -132,7 +133,7 @@ let proxyMock = (req, res, apiName, mockPath) => {
     }
 }
 
-let proxyStatic = (req, res, filePath, rule) => {
+let proxyStatic = (req, res, filePath, rule, isOnline) => {
     if (!util.isFile(filePath)) {
         let u = url.parse(req.url);
         filePath = path.join(filePath, u.pathname);
@@ -143,12 +144,24 @@ let proxyStatic = (req, res, filePath, rule) => {
         res.end(`not found ${filePath}`);
     } else {
         let readable = fs.createReadStream(filePath);
-        readable.pipe(res);
-        logServer.setProxyStatic(req.logId, readable, filePath, rule);
+        if (isOnline) {
+            proxyAll(req, res, (pRes) => {
+                let out = readable;
+                if (pRes && pRes.headers && pRes.headers['content-encoding'] == 'gzip') {
+                    out = zlib.createGzip();
+                    readable.pipe(out);
+                }
+                out.pipe(res);
+                logServer.setProxyStatic(req.logId, readable, filePath, rule, pRes && pRes.headers);
+            });
+        } else {
+            readable.pipe(res);
+            logServer.setProxyStatic(req.logId, readable, filePath, rule);
+        }
     }
 }
 
-let proxyAll = (cReq, cRes) => {
+let proxyAll = (cReq, cRes, donePipe) => {
     let u = url.parse(cReq.url);
     let options = {
         hostname: u.hostname,
@@ -160,10 +173,19 @@ let proxyAll = (cReq, cRes) => {
 
     let pReq = http.request(options, function(pRes) {
         cRes.writeHead(pRes.statusCode, pRes.headers);
-        pRes.pipe(cRes);
-        logServer.setRes(cReq.logId, pRes);
+        if (donePipe) {
+            donePipe(pRes);
+        } else {
+            pRes.pipe(cRes);
+            logServer.setRes(cReq.logId, pRes);
+        }
     }).on('error', function(e) {
-        cRes.end();
+        if (donePipe) {
+            donePipe();
+        } else {
+            cRes.writeHead(404);
+            cRes.end(`can not open ${cReq.url}`);
+        }
     });
 
     cReq._stream.pipe(pReq);
