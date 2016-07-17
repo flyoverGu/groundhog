@@ -1,10 +1,11 @@
+'use strict';
 const electron = require('electron')
     // Module to control application life.
 const app = electron.app
     // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-let appServer = require('./app');
+require('./app');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -19,9 +20,6 @@ function createWindow() {
 
     // and load the index.html of the app.
     mainWindow.loadURL('http://127.0.0.1:8887/index.html')
-
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

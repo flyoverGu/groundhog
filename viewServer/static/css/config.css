@@ -4,3 +4,7 @@ li {
 .rule-item.active {
     background-color: #4CAF50;
 }
+
+.rule-list {
+    font-size: 12px;
+}

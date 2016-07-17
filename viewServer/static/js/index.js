@@ -21,6 +21,8 @@ var renderItem = function(data) {
     } else if (data.res.statusCode == 1500) {
         data.statusCode = '代理失败'
         data.className = 'table-danger';
+    } else if (data.method == 'CONNECT') {
+        data.statusCode = 'https';
     } else {
         data.statusCode = data.res.statusCode;
         if (/^[45][0-9]{2}$/.test(data.res.statusCode)) {
