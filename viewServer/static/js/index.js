@@ -86,9 +86,13 @@ var renderJSON = function($el, json) {
 }
 
 var renderImg = function($el, data) {
-    var type = data.headers['content-type'];
-    var url = 'data:' + type + ';base64,' + data.body;
-    $el.html('<img src="' + url + '">');
+    if (data.statusCode == 304) {
+        $el.html('');
+    } else {
+        var type = data.headers['content-type'];
+        var url = 'data:' + type + ';base64,' + data.body;
+        $el.html('<img src="' + url + '">');
+    }
 }
 
 function syntaxHighlight(json) {

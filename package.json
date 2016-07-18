@@ -3,19 +3,27 @@
   "version": "0.0.1",
   "main": "electron.js",
   "scripts": {
+    "start": "electron .",
+    "test": "mocha test",
     "pack-mac": "electron-packager ./ --platform=darwin --arch=x64 --version=1.2.7 --out=./pack --overwrite --icon=./viewServer/static/img/icon.icns",
-    "pack-win": "electron-packager ./ --platform=win32 --arch=x64 --version=1.2.7 --out=./pack --overwrite"
+    "pack-win": "electron-packager ./ --platform=win32 --arch=x64 --version=1.2.7 --out=./pack --overwrite --icon=./viewServer/static/img/icon.ico"
   },
   "author": "flyover",
   "license": "ISC",
   "description": "",
   "bin": {
-      "groundhog": "app.js"
+    "groundhog": "app.js"
   },
   "dependencies": {
     "debug": "^2.2.0",
     "primus": "^5.2.2",
     "request": "^2.72.0",
     "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "koa": "^1.2.0",
+    "koa-static": "^2.0.0",
+    "supertest": "^1.2.0"
   }
 }
