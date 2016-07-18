@@ -32,6 +32,9 @@ pre.proxy {
     display: inline-block;
     margin: 3px 20px;
 }
+#item {
+    white-space: nowrap;
+}
 #item tr {
     cursor: pointer;
 }

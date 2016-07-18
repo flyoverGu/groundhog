@@ -71,15 +71,17 @@ var isContentType = function(headers, ct) {
 var renderBody = function($el, data) {
     if (isContentType(data.headers, 'image')) {
         renderImg($el, data);
-    } else if (isContentType(data.headers, 'html') || !data.headers) {
-        var bodyStr = JSON.stringify(data.body);
-        $el.text(bodyStr);
+    } else if (isContentType(data.headers, 'html') || !data.headers || isContentType(data.headers, 'xml')) {
+        $el.text(data.body);
     } else {
         renderJSON($el, data.body);
     }
 }
 
 var renderJSON = function($el, json) {
+    try {
+        json = JSON.stringify(JSON.parse(json), null, 2);
+    } catch (e) {}
     $el.html(syntaxHighlight(json));
 }
 
@@ -90,11 +92,11 @@ var renderImg = function($el, data) {
 }
 
 function syntaxHighlight(json) {
+    if (!json) return "";
     if (typeof json != 'string') {
         json = JSON.stringify(json, undefined, 2);
     }
-    if (!json) return '';
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
         var cls = 'number';
         if (/^"/.test(match)) {
