@@ -18,3 +18,6 @@ proxy client to 8888 port
 open `127.0.0.1:8887/index.html`   
 
 
+### Release
+
+[release](https://github.com/flyoverGu/groundhog/releases)

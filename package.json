@@ -1,14 +1,14 @@
 {
   "name": "Groundhog",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "electron.js",
   "scripts": {
-    "package": "electron-packager . --all"
+    "pack-mac": "electron-packager ./ --platform=darwin --arch=x64 --version=1.2.7 --out=./pack --overwrite --icon=./viewServer/static/img/icon.icns",
+    "pack-win": "electron-packager ./ --platform=win32 --arch=x64 --version=1.2.7 --out=./pack --overwrite --icon=./viewServer/static/img/icon.icon"
   },
-  "author": "",
+  "author": "flyover",
   "license": "ISC",
   "description": "",
-  "productName": "Groundhog",
   "bin": {
       "groundhog": "app.js"
   },
