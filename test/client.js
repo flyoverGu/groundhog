@@ -81,6 +81,34 @@ describe('proxy api', () => {
     });
 });
 
+describe('update rule', () => {
+    it('set rule host 127.0.0.1', done => {
+        ruleObj.host = '127.0.0.1';
+        request(viewUrl)
+            .post('/setRule')
+            .send(JSON.stringify(ruleObj))
+            .expect(200)
+            .end((err, res) => {
+                as.equal(res.text, 'ok');
+                done();
+            });
+    });
+});
+
+
+describe('proxy host', () => {
+    it('proxy get api', done => {
+        request(proxyUrl)
+            .get('/')
+            .expect(200)
+            .end((err, res) => {
+                as.equal(res.text, '{"abc":1}');
+                done();
+            })
+    });
+});
+
+
 describe('del rule', () => {
     it('del rule', done => {
         request(viewUrl)
@@ -92,4 +120,3 @@ describe('del rule', () => {
             });
     });
 });
-

@@ -14,7 +14,8 @@ $('form').on('click', '.set-rule', function() {
         status: $('.status').prop('checked'),
         isOnline: $('.isOnline').prop('checked'),
         ruleStr: $('#ruleStr').val(),
-        mockPath: $('#mockPath').val()
+        mockPath: $('#mockPath').val(),
+        host: $('#host').val()
     }
     if (ID) {
         data.id = ID;
@@ -61,6 +62,7 @@ var renderHtml = function(data) {
         name: rd.name || '',
         mockPath: rd.mockPath || '',
         ruleStr: rd.ruleStr || '',
+        host: rd.host || '',
         btnText: rd.id ? '更新' : '新建',
         checked: rd.id ? (rd.status ? 'checked' : '') : 'checked',
         isOnlineChecked: rd.id ? (rd.isOnline ? 'checked' : '') : ''

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>配置页面</title>
-    <link rel="shortcut icon" href="/img/icon.jpg" />
+    <link rel="shortcut icon" href="/img/icon.ico" />
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/config.css">
 </head>
@@ -36,6 +36,11 @@
         <fieldset class="form-group">
             <label for="exampleInputPassword1">Mock文件路径</label>
             <input type="text" class="form-control" id="mockPath" placeholder="mock path" value="{{mockPath}}">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputPassword1">Host</label>
+            <input type="text" class="form-control" id="host" placeholder="host" value="{{host}}">
+            <small class="text-muted">可支持域名和Ip</small>
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleTextarea">静态资源替换规则</label>

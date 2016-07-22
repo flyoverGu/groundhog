@@ -32,7 +32,8 @@ let create = (data) => {
         status: true,
         isOnline: false,
         mockPath: '',
-        ruleStr: ''
+        ruleStr: '',
+        host: '',
     }, data);
     ruleData[newData.id] = newData;
     _writeTemp();
@@ -51,16 +52,19 @@ let getRuleData = () => {
 let _getList = () => {
     let mockList = [];
     let ruleMap = {};
+    let host = '';
     for (let id in ruleData) {
         let item = ruleData[id];
         if (item.status) {
             _parseRuleStr(ruleMap, item.ruleStr, item.isOnline);
             mockList.push(item.mockPath);
+            host = item.host;
         }
     }
     return {
         mockList,
-        ruleMap
+        ruleMap,
+        host
     }
 }
 
@@ -70,6 +74,10 @@ let getRuleMap = () => {
 
 let getMockPath = () => {
     return _getList().mockList[0];
+}
+
+let getHost = () => {
+    return _getList().host;
 }
 
 let _parseRuleStr = (rule, ruleStr, isOnline) => {
@@ -91,5 +99,6 @@ module.exports = {
     del,
     getRuleData,
     getRuleMap,
-    getMockPath
+    getMockPath,
+    getHost
 }
