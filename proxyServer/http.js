@@ -88,8 +88,14 @@ let next = (req, res) => {
     logServer.createData(req);
     logServer.setReq(req.logId, req);
 
+
+    let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
+        req.query && (req.query['api_name'] || req.query['apiName']);
+
+
     // 代理到本地静态文件
     let ruleMap = ruleDao.getRuleMap();
+    if(!apiName)
     for (let key in ruleMap) {
         let rule = new RegExp(key);
         if (rule.test(req.url)) {
@@ -106,8 +112,6 @@ let next = (req, res) => {
     }
 
     // 代理mock数据
-    let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
-        req.query && (req.query['api_name'] || req.query['apiName']);
     if (apiName) {
         let mockPath = ruleDao.getMockPath();
         if (mockPath && mockPath.length) {
