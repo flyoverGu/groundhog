@@ -88,6 +88,22 @@ let next = (req, res) => {
     logServer.createData(req);
     logServer.setReq(req.logId, req);
 
+    // 代理到本地静态文件
+    let ruleMap = ruleDao.getRuleMap();
+    for (let key in ruleMap) {
+        let rule = new RegExp(key);
+        if (rule.test(req.url)) {
+            proxyStatic(req, res, ruleMap[key].path, key, ruleMap[key].isOnline);
+            return;
+        }
+    }
+
+    // 代理到指定host
+    let host = ruleDao.getHost();
+    if (host) {
+        proxyAll(req, res, null, host);
+        return;
+    }
 
     // 代理mock数据
     let apiName = req.body && (req.body['api_name'] || req.body['apiName']) ||
@@ -96,18 +112,6 @@ let next = (req, res) => {
         let mockPath = ruleDao.getMockPath();
         if (mockPath && mockPath.length) {
             proxyMock(req, res, apiName, mockPath);
-        } else {
-            proxyAll(req, res);
-        }
-        return;
-    }
-
-    // 代理到本地静态文件
-    let ruleMap = ruleDao.getRuleMap();
-    for (let key in ruleMap) {
-        let rule = new RegExp(key);
-        if (rule.test(req.url)) {
-            proxyStatic(req, res, ruleMap[key].path, key, ruleMap[key].isOnline);
             return;
         }
     }
@@ -161,16 +165,22 @@ let proxyStatic = (req, res, filePath, rule, isOnline) => {
     }
 }
 
-let proxyAll = (cReq, cRes, donePipe) => {
+
+let proxyAll = (cReq, cRes, donePipe, host) => {
     let u = url.parse(cReq.url);
+    if (host) {
+        let m = cReq.headers.host && cReq.headers.host.match(/(\S*):\S*/);
+        if (m) {
+            cReq.headers.host = m[1];
+        }
+    }
     let options = {
-        hostname: u.hostname,
-        port: u.port || 80,
+        hostname: host || u.hostname,
+        port: host ? 80 : (u.port || 80),
         path: u.path,
         method: cReq.method,
         headers: cReq.headers
     };
-
     let pReq = http.request(options, function(pRes) {
         cRes.writeHead(pRes.statusCode, pRes.headers);
         if (donePipe) {

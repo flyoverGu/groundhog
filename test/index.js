@@ -1,5 +1,5 @@
 'use strict';
 
 require('../app');
-//require('./server');
+require('./server');
 require('./client');
