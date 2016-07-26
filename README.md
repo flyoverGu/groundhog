@@ -39,7 +39,7 @@
 > mock数据是在开发过程中，没有真实后端数据的时候。可以编写一些mock数据用于接口返回。
 
 	修改之前的配置，增加mock文件路径
-![](http://ww3.sinaimg.cn/large/006tNbRwgw1f6746086p4j30kv0fkt9f.jpg)
+![](http://ww3.sinaimg.cn/large/006tNbRwgw1f6746086p4j30kv0fkt9f.jpg)       
 这样mock文件就会去指定的路径下寻找。    
 在`/Users/flyover/`下创建一个mock文件夹。     
 在mock目录中增加test_info.js文件，里面内容为
