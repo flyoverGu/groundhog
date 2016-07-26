@@ -3,7 +3,9 @@
 
 
 ### Download
-[release](https://github.com/flyoverGu/groundhog/releases)
+
+[百度网盘](http://pan.baidu.com/s/1kVsBX2J)
+
 
 ### Quickstart
 
