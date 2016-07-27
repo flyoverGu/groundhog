@@ -4,7 +4,8 @@
 
 ### Download
 
-[百度网盘](http://pan.baidu.com/s/1kVsBX2J)
+[mac](http://pan.baidu.com/s/1eSLS0Ie)
+[win](http://pan.baidu.com/s/1o7JZY6u)
 
 
 ### Quickstart
