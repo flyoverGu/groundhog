@@ -2,10 +2,9 @@
 
 let path = require('path');
 let fs = require('fs');
-let os = require('os');
 let util = require('../util');
 
-let tempPath = path.join(os.tmpdir(), 'groundhog-rule');
+let tempPath = util.getDataPath();
 
 let _readTemp = () => {
     try {

@@ -1,6 +1,8 @@
 'use strict';
 let crypto = require('crypto');
-let fs = require('fs');
+let fs = require('fs-extra');
+let os = require('os');
+let path = require('path');
 
 let getPipe = (p, done, fail, type) => {
     let _chunk = [];
@@ -33,8 +35,19 @@ let isFile = (filePath) => {
     }
 }
 
+let getDataPath = () => {
+    let homedir = typeof os.homedir == 'function' ? os.homedir() :
+        process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME'];
+    let dataDir = path.join(homedir, '.GroundhogAppData');
+    let filePath = path.join(dataDir, 'Groundhog-rule');
+    fs.ensureFileSync(filePath);
+    return filePath;
+}
+
+
 module.exports = {
     getPipe,
     generateId,
-    isFile
+    isFile,
+    getDataPath
 }
