@@ -95,14 +95,14 @@ let next = (req, res) => {
 
     // 代理到本地静态文件
     let ruleMap = ruleDao.getRuleMap();
-    if(!apiName)
-    for (let key in ruleMap) {
-        let rule = new RegExp(key);
-        if (rule.test(req.url)) {
-            proxyStatic(req, res, ruleMap[key].path, key, ruleMap[key].isOnline);
-            return;
+    if (!apiName)
+        for (let key in ruleMap) {
+            let rule = new RegExp(key);
+            if (rule.test(req.url)) {
+                proxyStatic(req, res, ruleMap[key].path, key, ruleMap[key].isOnline);
+                return;
+            }
         }
-    }
 
     // 代理到指定host
     let host = ruleDao.getHost();
@@ -186,6 +186,11 @@ let proxyAll = (cReq, cRes, donePipe, host) => {
         headers: cReq.headers
     };
     let pReq = http.request(options, function(pRes) {
+        // Some header contains spaces, at least being error node v51
+        for (let key in pRes.headers) {
+            pRes.headers[key.trim()] = pRes.headers[key];
+            delete pRes.headers[key];
+        }
         cRes.writeHead(pRes.statusCode, pRes.headers);
         if (donePipe) {
             donePipe(pRes);
