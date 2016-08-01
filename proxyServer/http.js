@@ -188,8 +188,10 @@ let proxyAll = (cReq, cRes, donePipe, host) => {
     let pReq = http.request(options, function(pRes) {
         // Some header contains spaces, at least being error node v51
         for (let key in pRes.headers) {
-            pRes.headers[key.trim()] = pRes.headers[key];
-            delete pRes.headers[key];
+            if (/\s$/.test(key)) {
+                pRes.headers[key.trim()] = pRes.headers[key];
+                delete pRes.headers[key];
+            }
         }
         cRes.writeHead(pRes.statusCode, pRes.headers);
         if (donePipe) {
