@@ -5,7 +5,7 @@
 ### Download
 
 [mac](http://pan.baidu.com/s/1eSLS0Ie)
-[win](http://pan.baidu.com/s/1o7JZY6u)
+[win](https://pan.baidu.com/s/1bpp4Tcz)
 
 
 ### Quickstart
