@@ -106,7 +106,7 @@ let next = (req, res) => {
 
     // 代理到指定host
     let host = ruleDao.getHost();
-    if (host) {
+    if (host && apiName) {
         proxyAll(req, res, null, host);
         return;
     }
