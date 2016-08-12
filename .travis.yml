@@ -1,4 +1,4 @@
-sudo: true
+sudo: required
 language: node_js
 node_js:
   - "4.2.2"
@@ -7,3 +7,5 @@ cache:
     - node_modules
 script:
   - npm test
+os:
+  - osx
