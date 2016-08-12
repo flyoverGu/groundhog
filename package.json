@@ -4,7 +4,7 @@
   "main": "electron.js",
   "scripts": {
     "start": "electron .",
-    "test": "mocha test",
+    "test": "sudo mocha test",
     "pack-mac": "electron-packager ./ --platform=darwin --arch=x64 --version=1.2.7 --out=./pack --overwrite --prune --icon=./viewServer/static/img/icon.icns",
     "pack-win": "electron-packager ./ --platform=win32 --arch=x64 --version=1.2.7 --out=./pack --overwrite --prune --icon=./viewServer/static/img/icon.ico"
   },
