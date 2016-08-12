@@ -1,6 +1,8 @@
 # Groundhog
 土拨鼠代理器。支持代理静态文件，请求mock数据，host绑定方式代理。
 
+[![Build Status](https://travis-ci.org/flyoverGu/groundhog.svg?branch=master)](https://travis-ci.org/flyoverGu/groundhog)
+
 
 ### Download
 
