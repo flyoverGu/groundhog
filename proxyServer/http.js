@@ -174,15 +174,30 @@ let proxyStatic = (req, res, filePath, rule, isOnline) => {
 
 let proxyAll = (cReq, cRes, donePipe, host) => {
     let u = url.parse(cReq.url);
+    let port = 80;
+    let rawHost = cReq.headers.host;
+    // 如果指定了host
     if (host) {
+        // 请求的host已经保持原来的
         let m = cReq.headers.host && cReq.headers.host.match(/(\S*):\S*/);
         if (m) {
             cReq.headers.host = m[1];
         }
+        // 截取host中的port
+        m = host.match(/(\S*):(\S*)/);
+        if (m) {
+            host = m[1];
+            port = m[2];
+        }
+    }
+    // 如果host地址中带有host,需要去掉
+    let mh = rawHost.match(/(\S*):\S*/);
+    if (mh) {
+        rawHost = mh[1];
     }
     let options = {
-        hostname: host || cReq.headers.host || u.hostname,
-        port: host ? 80 : (u.port || 80),
+        hostname: host || rawHost,
+        port: host ? port : (u.port || 80),
         path: u.path,
         method: cReq.method,
         headers: cReq.headers
