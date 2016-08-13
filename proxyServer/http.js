@@ -181,7 +181,7 @@ let proxyAll = (cReq, cRes, donePipe, host) => {
         }
     }
     let options = {
-        hostname: host || u.hostname,
+        hostname: host || cReq.headers.host || u.hostname,
         port: host ? 80 : (u.port || 80),
         path: u.path,
         method: cReq.method,
@@ -207,7 +207,8 @@ let proxyAll = (cReq, cRes, donePipe, host) => {
             donePipe();
         } else {
             cRes.writeHead(404);
-            cRes.end(`can not open ${cReq.url}`);
+            cRes.end(`can not open ${cReq.url} ; error ${e.message}; ${JSON.stringify(options)}`);
+
         }
     });
 
